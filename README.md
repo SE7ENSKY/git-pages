@@ -1,10 +1,24 @@
 git-pages
 =========
 
-GitHub Pages analogue based on web hook. Gracefully used with GitLab.
+Simple and robust GitHub Pages realisation for on-premise or in-cloud usage.
+
+## Features
+* GitHub-compatible service hook
+* fetches/updates only gh-pages branch
+* custom domains support (fully GitHub Pages compatible)
+* static file serving
+
+
+## Installation and configuration
+To be written...
+
+## ToDo
+* GitLab-compatible service hook
+* custom 404 support
+* write documentation
 
 ## License
-
 The MIT License (MIT)
 
 Copyright (c) 2013 [Se7enSky studio](http://github.com/Se7enSky)
