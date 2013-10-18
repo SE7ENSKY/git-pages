@@ -1,0 +1,11 @@
+{
+  "name": "git-pages",
+  "version": "0.1.0",
+  "dependencies": {
+    "coffee-script": "*",
+    "connect": "~2.9.1"
+  },
+  "scripts": {
+  	"start": "node_modules/.bin/coffee app.coffee"
+  }
+}
