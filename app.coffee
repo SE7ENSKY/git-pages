@@ -72,9 +72,17 @@ readConfig = (target) ->
 		cname = "#{cname}".replace ///\s///g, ''
 		cnames[cname] = target
 		m = target.split '/'
-		redirectHosts["#{m[1]}.#{m[0]}.#{ROOT_HOST}"] = cname
+		hostPart = "#{m[1]}.#{m[0]}"
+		redirectHosts["#{hostPart}.#{ROOT_HOST}"] = cname
+		if m = cname.match ///^www\.(.+)$///
+			tld = m[1]
+			redirectHosts[tld] = cname
+		else
+			redirectHosts["www.#{cname}"] = cname
+
 	
 	targets.push target if target not in targets
+
 	console.dir
 		cnames: cnames
 		redirectHosts: redirectHosts
