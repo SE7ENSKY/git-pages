@@ -12,12 +12,13 @@ ALLOW_NETWORKS = [
 
 PORT = process.env.PORT or 3000
 PUBLIC_DIR = process.env.PUBLIC_DIR or "#{__dirname}/public"
+TMP_DIR = "#{__dirname}/tmp"
 ROOT_HOST = process.env.ROOT_HOST or "localhost"
 rootHostRegexed = ROOT_HOST.replace ///\.///g, '\\.'
 
 cnames = {}
 redirectHosts = {}
-targets = ['se7ensky/matescript.com']
+targets = []
 
 serviceHookEndpoint = (req, res, next) ->
 	if req.method is 'POST' and req.body.payload
@@ -51,16 +52,13 @@ vhostRewriter = (req, res, next) ->
 handleRepository = (owner, repo, url) ->
 	owner = owner.toLowerCase()
 	repo = repo.toLowerCase()
+	rnd = Math.round(Math.random() * 1000000)
 	exec """
-		mkdir -p #{PUBLIC_DIR}/#{owner}/#{repo}
-		cd #{PUBLIC_DIR}/#{owner}/#{repo}
-		if [ -d ".git" ]; then
-			git fetch #{url} gh-pages
-		else
-			git init
-			git fetch #{url} gh-pages:gh-pages
-			git checkout gh-pages
-		fi
+		mkdir -p #{TMP_DIR}/#{rnd}
+		git clone --depth=1 --single-branch --branch=gh-pages #{url} #{TMP_DIR}/#{rnd}
+		[ -d "#{PUBLIC_DIR}/#{owner}/#{repo}" ] && rm -rf #{PUBLIC_DIR}/#{owner}/#{repo}
+		mkdir -p #{PUBLIC_DIR}/#{owner}
+		mv #{TMP_DIR}/#{rnd} #{PUBLIC_DIR}/#{owner}/#{repo}
 	""", (err, stdout, stderr) ->
 		readConfig "#{owner}/#{repo}"
 		console.log "Successfully handled #{owner}/#{repo} from #{url}"
