@@ -89,12 +89,13 @@ readConfig = (target) ->
 		targets: targets
 
 # read config on startup
-owners = fs.readdirSync PUBLIC_DIR
-for owner in owners
-	repos = fs.readdirSync "#{PUBLIC_DIR}/#{owner}"
-	for repo in repos
-		target = "#{owner}/#{repo}"
-		readConfig target
+if fs.existsSync PUBLIC_DIR
+	owners = fs.readdirSync PUBLIC_DIR
+	for owner in owners
+		repos = fs.readdirSync "#{PUBLIC_DIR}/#{owner}"
+		for repo in repos
+			target = "#{owner}/#{repo}"
+			readConfig target
 
 app = connect()
 app.use connect.logger 'dev'
