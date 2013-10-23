@@ -26,8 +26,7 @@ serviceHookEndpoint = (req, res, next) ->
 			# ToDo: validate input
 			payload = JSON.parse req.body.payload
 			res.end()
-			r = payload.repository
-			handleRepository r.owner.name, r.name, r.url
+			handleRepository payload.repository.url
 		catch e
 			next e
 	else next()
@@ -49,7 +48,10 @@ vhostRewriter = (req, res, next) ->
 			next()
 	else next()
 
-handleRepository = (owner, repo, url) ->
+handleRepository = (url) ->
+	m = url.match ////([a-zA-Z0-9\-\.]+)/([a-zA-Z0-9\-\.]+)\.git$///
+	owner = m[1]
+	repo = m[2]
 	owner = owner.toLowerCase()
 	repo = repo.toLowerCase()
 	rnd = Math.round(Math.random() * 1000000)
