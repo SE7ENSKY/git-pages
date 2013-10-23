@@ -21,10 +21,15 @@ redirectHosts = {}
 targets = []
 
 serviceHookEndpoint = (req, res, next) ->
+	console.dir req.body
 	if req.method is 'POST' and req.body
 		try
 			# ToDo: validate input
-			payload = JSON.parse(req.body.payload or req.body)
+
+			payload = if req.body.payload
+				JSON.parse req.body.payload
+			else
+				req.body
 			res.end()
 			handleRepository payload.repository.url
 		catch e
@@ -49,9 +54,9 @@ vhostRewriter = (req, res, next) ->
 	else next()
 
 handleRepository = (url) ->
-	m = url.match ////([a-zA-Z0-9\-\.]+)/([a-zA-Z0-9\-\.]+)\.git$///
+	m = url.match ///([a-zA-Z0-9\-\.]+)/([a-zA-Z0-9\-\.]+)\.git$///
 	if not m
-		m = url.match ////([a-zA-Z0-9\-\.]+)/([a-zA-Z0-9\-\.]+)$///
+		m = url.match ///([a-zA-Z0-9\-\.]+)/([a-zA-Z0-9\-\.]+)$///
 	owner = m[1]
 	repo = m[2]
 	owner = owner.toLowerCase()
