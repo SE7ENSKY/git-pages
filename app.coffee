@@ -21,7 +21,6 @@ redirectHosts = {}
 targets = []
 
 serviceHookEndpoint = (req, res, next) ->
-	console.dir req.body
 	if req.method is 'POST' and req.body
 		try
 			# ToDo: validate input
