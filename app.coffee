@@ -50,6 +50,8 @@ vhostRewriter = (req, res, next) ->
 
 handleRepository = (url) ->
 	m = url.match ////([a-zA-Z0-9\-\.]+)/([a-zA-Z0-9\-\.]+)\.git$///
+	if not m
+		m = url.match ////([a-zA-Z0-9\-\.]+)/([a-zA-Z0-9\-\.]+)$///
 	owner = m[1]
 	repo = m[2]
 	owner = owner.toLowerCase()
