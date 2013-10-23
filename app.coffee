@@ -21,10 +21,10 @@ redirectHosts = {}
 targets = []
 
 serviceHookEndpoint = (req, res, next) ->
-	if req.method is 'POST' and req.body.payload
+	if req.method is 'POST' and req.body
 		try
 			# ToDo: validate input
-			payload = JSON.parse req.body.payload
+			payload = JSON.parse(req.body.payload or req.body)
 			res.end()
 			handleRepository payload.repository.url
 		catch e
