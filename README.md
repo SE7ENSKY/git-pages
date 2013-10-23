@@ -4,19 +4,23 @@ git-pages
 Simple and robust GitHub Pages realisation for on-premise or in-cloud usage.
 
 ## Features
-* GitHub-compatible service hook
+
+* compatible service hook
+  * GitHub
+  * GitLab
 * fetches/updates only gh-pages branch
 * custom domains support (fully GitHub Pages compatible)
 * static file serving
-
 
 ## Installation and configuration
 To be written...
 
 ## ToDo
-* GitLab-compatible service hook
+
+* better logging
 * custom 404 support
 * write documentation
+* mercurial support
 
 ## License
 The MIT License (MIT)
