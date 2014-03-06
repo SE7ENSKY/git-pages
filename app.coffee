@@ -23,6 +23,7 @@ targets = []
 serviceHookEndpoint = (req, res, next) ->
 	if req.method is 'POST' and req.body
 		try
+			console.log req.body
 			# ToDo: validate input
 
 			payload = if req.body.payload
@@ -68,8 +69,19 @@ handleRepository = (url) ->
 		mkdir -p #{PUBLIC_DIR}/#{owner}
 		mv #{TMP_DIR}/#{rnd} #{PUBLIC_DIR}/#{owner}/#{repo}
 	""", (err, stdout, stderr) ->
-		readConfig "#{owner}/#{repo}"
-		console.log "Successfully handled #{owner}/#{repo} from #{url}"
+		if err
+			console.log "Error handling #{owner}/#{repo} from #{url}"
+			console.log err
+			console.log stdout
+			console.log stderr
+		else
+			readConfig "#{owner}/#{repo}"
+			console.log "Successfully handled #{owner}/#{repo} from #{url}"
+			console.log "---"
+			console.log stdout
+			console.log "---"
+			console.log stderr
+			console.log "---"
 
 readConfig = (target) ->
 	dir = "#{PUBLIC_DIR}/#{target}"
